@@ -1,4 +1,4 @@
-# PixelPhoenix-KLA-PS01
+PixelPhoenix-KLA-PS01
 ### AI-Based Restoration of Degraded Semiconductor Inspection Images
 
 This repository contains our solution for the KLA hackathon problem statement **"AI-Based Restoration of Degraded Images."** The model restores noisy, low-resolution grayscale semiconductor inspection images into clean, high-resolution outputs.
@@ -32,7 +32,7 @@ The model learns to reverse these degradations, producing a restored image that 
 | PSNR | 27.94 |
 | SSIM | 0.774 |
 | LPIPS | 0.283 |
-| Inference time | ~5.9 ms/image (NVIDIA T4) |
+| Inference time | ~4-6 ms/image (NVIDIA T4) |
 | Model size | 1.78 MB (465,953 parameters) |
 
 ---
@@ -82,7 +82,7 @@ python inference.py --input_dir ./test_data/NoisyLR --output_dir ./restored_outp
 
 The script automatically uses GPU if available, and falls back to CPU otherwise. It prints total and average inference time upon completion.
 
-This script has been verified to run end-to-end with zero manual edits on a fresh Colab runtime, successfully restoring all 400 images in the provided test set.
+This script has been verified to run end-to-end with zero manual edits on a fresh Colab runtime (both CPU and T4 GPU), successfully restoring all 400 images in the provided test set with correct, verified visual output.
 
 ---
 
@@ -90,7 +90,7 @@ This script has been verified to run end-to-end with zero manual edits on a fres
 
 Our model's restored outputs for the full provided test set (400 images, `.npy` format) are available here:
 
-**[Download restored_outputs.zip (Google Drive)](https://drive.google.com/file/d/1M1wY90LoEM9X3GhR7ftiIuH1tljeEY5M/view?usp=drive_link)**
+**[Download restored_outputs_final.zip (Google Drive)](https://drive.google.com/file/d/1-AtVUfFZBhAFi1k1Wgkp-OjEpjYCKPnV/view?usp=drive_link)**
 
 (Hosted on Drive rather than committed directly to the repo due to GitHub's file size limits.)
 
@@ -118,3 +118,4 @@ Open `KLA_training.ipynb` in Google Colab (GPU runtime recommended — T4 or bet
 
 - Validation was performed on an in-distribution held-out split (90/10) from the provided training data. Out-of-distribution evaluation was not performed due to the absence of source-labeled OOD data in the training set.
 - The model was trained and benchmarked on an NVIDIA T4 GPU (Google Colab). Inference is expected to run at least as fast on KLA's benchmarking hardware.
+- Some images in the provided test set (`Test_NoisyLR`) depict natural/non-semiconductor textures (e.g. rock, wood, water), consistent with the challenge's inclusion of out-of-distribution test samples to evaluate generalization.
