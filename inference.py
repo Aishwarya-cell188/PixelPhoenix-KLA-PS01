@@ -89,11 +89,11 @@ def preprocess(arr: np.ndarray, target_size: int = 256) -> torch.Tensor:
     """
     x = arr.astype(np.float32)
 
-    # Normalize to [0,1]. Training data was already stored in [0,1]-like range;
-    # this guards against any stray values outside that range without assuming
-    # a fixed 0-255 scale (values can already be near [0,1] per dataset inspection).
-    if x.max() > 1.5:  # heuristic: looks like 0-255 range rather than 0-1
-        x = x / 255.0
+    # Training and test data are already stored in a [0,1]-like range.
+    # Speckle noise can occasionally push values slightly outside [0,1]
+    # (verified: real test data observed max ~1.54), which is handled by
+    # the clamp below rather than any rescaling — rescaling (e.g. /255)
+    # would incorrectly crush already-correct [0,1] values toward zero.
 
     tensor = torch.from_numpy(x).unsqueeze(0).unsqueeze(0).float()  # [1,1,H,W]
 
