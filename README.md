@@ -45,9 +45,10 @@ PixelPhoenix-KLA-PS01/
 ├── model_weights.pth       # Trained model weights
 ├── KLA_training.ipynb      # Training notebook (reproduces training from scratch)
 ├── requirements.txt        # Python dependencies
-├── restored_outputs/       # Model outputs on the provided test set
 └── README.md
 ```
+
+Restored outputs on the full provided test set (400 images) are available via Google Drive — see **Restored Test Outputs** section below.
 
 ---
 
@@ -81,6 +82,18 @@ python inference.py --input_dir ./test_data/NoisyLR --output_dir ./restored_outp
 
 The script automatically uses GPU if available, and falls back to CPU otherwise. It prints total and average inference time upon completion.
 
+This script has been verified to run end-to-end with zero manual edits on a fresh Colab runtime, successfully restoring all 400 images in the provided test set.
+
+---
+
+## Restored Test Outputs
+
+Our model's restored outputs for the full provided test set (400 images, `.npy` format) are available here:
+
+**[Download restored_outputs.zip (Google Drive)](https://drive.google.com/file/d/1M1wY90LoEM9X3GhR7ftiIuH1tljeEY5M/view?usp=drive_link)**
+
+(Hosted on Drive rather than committed directly to the repo due to GitHub's file size limits.)
+
 ---
 
 ## Reproducing Training
@@ -105,4 +118,3 @@ Open `KLA_training.ipynb` in Google Colab (GPU runtime recommended — T4 or bet
 
 - Validation was performed on an in-distribution held-out split (90/10) from the provided training data. Out-of-distribution evaluation was not performed due to the absence of source-labeled OOD data in the training set.
 - The model was trained and benchmarked on an NVIDIA T4 GPU (Google Colab). Inference is expected to run at least as fast on KLA's benchmarking hardware.
-
